@@ -8,13 +8,10 @@ import reportUser.ReportDeptor;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class DateDeptor  {
     private static String deptorA;
-    ArrayList<String> textDeptor = new ArrayList<>();
-
     public static void receivingDateString(TextArea textDeptors, String recipientConn,
                                            String stationConn,
                                            String nominationConn,

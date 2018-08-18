@@ -16,4 +16,11 @@ public class Report {
         repor.setContentText("Неправильный ввод ID");
         repor.showAndWait();
     }
+    public void messageDate(){
+        Alert repor = new Alert(Alert.AlertType.INFORMATION);
+        repor.setTitle("Information");
+        repor.setHeaderText(null);
+        repor.setContentText("Неправильный ввод даты");
+        repor.showAndWait();
+    }
 }

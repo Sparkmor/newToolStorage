@@ -172,6 +172,9 @@ public class NewStringStorage {
                         textFieldReturnDate.getText().length() == 0 ||
                         textFieldDetail.getText().length() == 0) {
                     report.message();
+                }else if (textFieldDateOfIssue.getText().matches("-?[\\d]+") == false ||
+                          textFieldReturnDate.getText().matches("-?[\\d]+") == false){
+                    report.messageDate();
                 } else {
                     textRecipientCol = textFieldRecipint.getText();
                     textStationCol = comboStation.getValue().toString();
