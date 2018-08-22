@@ -3,4 +3,3 @@ This project was created for the warehouse of the "measuring instrument". It hel
   JavaFx.
   SQLite.
   Joba - Time
-P.S Cautiously SHOULD CODE
