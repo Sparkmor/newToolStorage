@@ -1,0 +1,221 @@
+Index: src/newStorUse/NewStringStorage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/newStorUse/NewStringStorage.java	(date 1534599983000)
++++ src/newStorUse/NewStringStorage.java	(revision )
+@@ -16,6 +16,9 @@
+ import sample.UserStorage;
+ 
+ import java.sql.SQLException;
++import java.text.ParseException;
++import java.text.SimpleDateFormat;
++import java.util.Date;
+ 
+ 
+ public class NewStringStorage {
+@@ -31,6 +34,9 @@
+ 
+     Conn db = new Conn();
+     Report report = new Report();
++    SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
++    Date testDate;
++    Date testDate1;
+ 
+     public void newStorUser(Stage stage, ObservableList<UserStorage> data) {
+         Stage newStrStStage = new Stage();
+@@ -155,53 +161,78 @@
+                 labeDetail,
+                 btnNewTableColum);
+ 
+-        Scene sceneNewStr = new Scene(paneNewStr, 300,500, Color.rgb(143, 188, 143));
++        Scene sceneNewStr = new Scene(paneNewStr, 300, 500, Color.rgb(143, 188, 143));
+ 
+         newStrStStage.setScene(sceneNewStr);
+         newStrStStage.show();
+ 
+ 
+         btnNewTableColum.setOnAction(event -> {
+-            try {
+-                if (textFieldRecipint.getText().length() == 0 ||
+-                        comboStation.getValue() == null ||
+-                        textFieldNomination.getText().length() == 0 ||
+-                        textFieldSize.getText().length() == 0 ||
+-                        textFieldIndex.getText().length() == 0 ||
+-                        textFieldDateOfIssue.getText().length() == 0 ||
+-                        textFieldReturnDate.getText().length() == 0 ||
+-                        textFieldDetail.getText().length() == 0) {
+-                    report.message();
+-                }else if (textFieldDateOfIssue.getText().matches("-?[\\d]+") == false ||
+-                          textFieldReturnDate.getText().matches("-?[\\d]+") == false){
+-                    report.messageDate();
+-                } else {
+-                    textRecipientCol = textFieldRecipint.getText();
+-                    textStationCol = comboStation.getValue().toString();
+-                    textNominationCol = textFieldNomination.getText();
+-                    textSizeCol = textFieldSize.getText();
+-                    textIndexCol = textFieldIndex.getText();
+-                    textDateOfIssueCol = textFieldDateOfIssue.getText();
+-                    textReturnDateCol = textFieldReturnDate.getText();
+-                    textDetailCol = textFieldDetail.getText();
+-                    data.removeAll(data);
+-                    db.writeBd(textRecipientCol, textStationCol, textNominationCol, textSizeCol, textIndexCol, textDateOfIssueCol, textReturnDateCol, textDetailCol);
+-                    db.readBd(data);
+-                    newStrStStage.close();
+-                }
+-
+-
+-
+-                } catch(ClassNotFoundException e){
+-                    e.printStackTrace();
+-                } catch(SQLException e){
+-                    e.printStackTrace();
+-                }
+-
+-        });
+-
+-
+-
+-
++            if (textFieldRecipint.getText().length() == 0 ||
++                    comboStation.getValue() == null ||
++                    textFieldNomination.getText().length() == 0 ||
++                    textFieldSize.getText().length() == 0 ||
++                    textFieldIndex.getText().length() == 0 ||
++                    textFieldDateOfIssue.getText().length() == 0 ||
++                    textFieldReturnDate.getText().length() == 0 ||
++                    textFieldDetail.getText().length() == 0) {
++                report.message();
++            } else {
++                testDate(data,
++                        textFieldRecipint,
++                        comboStation,
++                        textFieldNomination,
++                        textFieldSize,
++                        textFieldIndex,
++                        textFieldDateOfIssue,
++                        textFieldReturnDate,
++                        textFieldDetail,
++                        newStrStStage);
++            }
++        });
++    }
++
++    protected void testDate(ObservableList<UserStorage> data,
++                            TextField textFieldRecipint,
++                            ComboBox comboStation,
++                            TextField textFieldNomination,
++                            TextField textFieldSize,
++                            TextField textFieldIndex,
++                            TextField textFieldDateOfIssue,
++                            TextField textFieldReturnDate,
++                            TextField textFieldDetail,
++                            Stage newStrStStage){
++        try {
++            testDate = formatter.parse(textFieldDateOfIssue.getText());
++            testDate1 = formatter.parse(textFieldReturnDate.getText());
++
++            if (!formatter.format(testDate).equals(textFieldDateOfIssue.getText()) ||
++                !formatter.format(testDate1).equals(textFieldReturnDate.getText())){
++
++                report.messageDate();
++
++            }else {
++                textRecipientCol = textFieldRecipint.getText();
++                textStationCol = comboStation.getValue().toString();
++                textNominationCol = textFieldNomination.getText();
++                textSizeCol = textFieldSize.getText();
++                textIndexCol = textFieldIndex.getText();
++                textDateOfIssueCol = textFieldDateOfIssue.getText();
++                textReturnDateCol = textFieldReturnDate.getText();
++                textDetailCol = textFieldDetail.getText();
++                data.removeAll(data);
++                db.writeBd(textRecipientCol, textStationCol, textNominationCol, textSizeCol, textIndexCol, textDateOfIssueCol, textReturnDateCol, textDetailCol);
++                db.readBd(data);
++                newStrStStage.close();
++            }
++        } catch (ParseException e) {
++            e.printStackTrace();
++            report.messageDate();
++        } catch (SQLException e) {
++            e.printStackTrace();
++        } catch (ClassNotFoundException e) {
++            e.printStackTrace();
++        }
+     }
+-}
+\ No newline at end of file
++}
++
+Index: src/sample/BixStorage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/sample/BixStorage.java	(date 1534599983000)
++++ src/sample/BixStorage.java	(revision )
+@@ -72,47 +72,56 @@
+ 
+         TableColumn recipientCol = new TableColumn("получатель");
+         recipientCol.setMinWidth(200);
++        recipientCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 500;");
+         recipientCol.setCellValueFactory(
+                 new PropertyValueFactory<>("recipient"));//
+ 
+ 
+         TableColumn stationCol = new TableColumn("участок");
+         stationCol.setMinWidth(30);
++        stationCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
+         stationCol.setCellValueFactory(
+                 new PropertyValueFactory<UserStorage, String>("station"));
+ 
+         TableColumn nominationCol = new TableColumn("наименование");
+         nominationCol.setMinWidth(100);
++        nominationCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
+         nominationCol.setCellValueFactory(
+                 new PropertyValueFactory<UserStorage, String>("nomination"));
+ 
+         TableColumn sizeCol = new TableColumn("размер");
+         sizeCol.setMinWidth(40);
++        sizeCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
+         sizeCol.setCellValueFactory(
+                 new PropertyValueFactory<UserStorage, String>("size"));
+ 
+         TableColumn indexCol = new TableColumn("№ номер");
+         indexCol.setMinWidth(40);
++        indexCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
+         indexCol.setCellValueFactory(new PropertyValueFactory<UserStorage, String>("index"));
+ 
+         TableColumn dateOfIssueCol = new TableColumn("Д/выдачи");
+         dateOfIssueCol.setMinWidth(60);
++        dateOfIssueCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
+         dateOfIssueCol.setCellValueFactory(
+                 new PropertyValueFactory<UserStorage, String>("dateOfIssue"));
+ 
+         TableColumn returnDateCol = new TableColumn("Д/возврата");
+         returnDateCol.setMinWidth(60);
++        returnDateCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
+         returnDateCol.setCellValueFactory(
+                 new PropertyValueFactory<UserStorage, String>("returnDate"));
+ 
+         TableColumn detailCol = new TableColumn("деталь");
+         detailCol.setMinWidth(70);
++        detailCol.setStyle("-fx-font-family: Bradley Hand; -fx-font-size: 16; -fx-font-weight: 600;");
+         detailCol.setCellValueFactory(
+                 new PropertyValueFactory<UserStorage, String>("detail"));
+ 
+ 
+         TableColumn idCol = new TableColumn("№ строки");
+         idCol.setMinWidth(40);
++        idCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
+         idCol.setCellValueFactory(
+                 new PropertyValueFactory<UserStorage, String>("id"));
+ 
+diff --git baseTool.s3db baseTool.s3db
+deleted file mode 100644
+index 2002ab50df55b026ac3d7c5ba049087a705a26ea..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+Hc$@<O00001
+

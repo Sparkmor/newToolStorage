@@ -1,0 +1,72 @@
+Index: src/datesComparing/DateDeptor.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/datesComparing/DateDeptor.java	(revision 099977e21fa31996297ed655296a6c83c16e5279)
++++ src/datesComparing/DateDeptor.java	(revision )
+@@ -8,13 +8,10 @@
+ 
+ import java.text.ParseException;
+ import java.text.SimpleDateFormat;
+-import java.util.ArrayList;
+ import java.util.Date;
+ 
+ public class DateDeptor  {
+     private static String deptorA;
+-    ArrayList<String> textDeptor = new ArrayList<>();
+-
+     public static void receivingDateString(TextArea textDeptors, String recipientConn,
+                                            String stationConn,
+                                            String nominationConn,
+Index: src/reportUser/Report.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/reportUser/Report.java	(revision 099977e21fa31996297ed655296a6c83c16e5279)
++++ src/reportUser/Report.java	(revision )
+@@ -16,4 +16,11 @@
+         repor.setContentText("Неправильный ввод ID");
+         repor.showAndWait();
+     }
++    public void messageDate(){
++        Alert repor = new Alert(Alert.AlertType.INFORMATION);
++        repor.setTitle("Information");
++        repor.setHeaderText(null);
++        repor.setContentText("Неправильный ввод даты");
++        repor.showAndWait();
++    }
+ }
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(revision 099977e21fa31996297ed655296a6c83c16e5279)
++++ .idea/vcs.xml	(revision )
+@@ -2,5 +2,6 @@
+ <project version="4">
+   <component name="VcsDirectoryMappings">
+     <mapping directory="" vcs="Git" />
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: src/newStorUse/NewStringStorage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/newStorUse/NewStringStorage.java	(revision 099977e21fa31996297ed655296a6c83c16e5279)
++++ src/newStorUse/NewStringStorage.java	(revision )
+@@ -172,6 +172,9 @@
+                         textFieldReturnDate.getText().length() == 0 ||
+                         textFieldDetail.getText().length() == 0) {
+                     report.message();
++                }else if (textFieldDateOfIssue.getText().matches("-?[\\d]+") == false ||
++                          textFieldReturnDate.getText().matches("-?[\\d]+") == false){
++                    report.messageDate();
+                 } else {
+                     textRecipientCol = textFieldRecipint.getText();
+                     textStationCol = comboStation.getValue().toString();

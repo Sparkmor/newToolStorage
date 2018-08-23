@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="newToolStorage:jar">
+    <output-path>E:/gotFileJar/Desktop</output-path>
+    <root id="archive" name="newToolStorage.jar">
+      <element id="module-output" name="newToolStorage" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/jars/joda-time-2.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/sqlite-jdbc-3.7.2.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/jars/joda-time-2.10.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/sqlite-jdbc-3.7.2.jar" />
+    </root>
+  </artifact>
+</component>
