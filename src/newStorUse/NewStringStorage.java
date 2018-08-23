@@ -16,6 +16,9 @@ import sample.Conn;
 import sample.UserStorage;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class NewStringStorage {
@@ -31,6 +34,9 @@ public class NewStringStorage {
 
     Conn db = new Conn();
     Report report = new Report();
+    SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+    Date testDate;
+    Date testDate1;
 
     public void newStorUser(Stage stage, ObservableList<UserStorage> data) {
         Stage newStrStStage = new Stage();
@@ -155,53 +161,78 @@ public class NewStringStorage {
                 labeDetail,
                 btnNewTableColum);
 
-        Scene sceneNewStr = new Scene(paneNewStr, 300,500, Color.rgb(143, 188, 143));
+        Scene sceneNewStr = new Scene(paneNewStr, 300, 500, Color.rgb(143, 188, 143));
 
         newStrStStage.setScene(sceneNewStr);
         newStrStStage.show();
 
 
         btnNewTableColum.setOnAction(event -> {
-            try {
-                if (textFieldRecipint.getText().length() == 0 ||
-                        comboStation.getValue() == null ||
-                        textFieldNomination.getText().length() == 0 ||
-                        textFieldSize.getText().length() == 0 ||
-                        textFieldIndex.getText().length() == 0 ||
-                        textFieldDateOfIssue.getText().length() == 0 ||
-                        textFieldReturnDate.getText().length() == 0 ||
-                        textFieldDetail.getText().length() == 0) {
-                    report.message();
-                }else if (textFieldDateOfIssue.getText().matches("-?[\\d]+") == false ||
-                          textFieldReturnDate.getText().matches("-?[\\d]+") == false){
-                    report.messageDate();
-                } else {
-                    textRecipientCol = textFieldRecipint.getText();
-                    textStationCol = comboStation.getValue().toString();
-                    textNominationCol = textFieldNomination.getText();
-                    textSizeCol = textFieldSize.getText();
-                    textIndexCol = textFieldIndex.getText();
-                    textDateOfIssueCol = textFieldDateOfIssue.getText();
-                    textReturnDateCol = textFieldReturnDate.getText();
-                    textDetailCol = textFieldDetail.getText();
-                    data.removeAll(data);
-                    db.writeBd(textRecipientCol, textStationCol, textNominationCol, textSizeCol, textIndexCol, textDateOfIssueCol, textReturnDateCol, textDetailCol);
-                    db.readBd(data);
-                    newStrStStage.close();
-                }
-
-
-
-                } catch(ClassNotFoundException e){
-                    e.printStackTrace();
-                } catch(SQLException e){
-                    e.printStackTrace();
-                }
-
+            if (textFieldRecipint.getText().length() == 0 ||
+                    comboStation.getValue() == null ||
+                    textFieldNomination.getText().length() == 0 ||
+                    textFieldSize.getText().length() == 0 ||
+                    textFieldIndex.getText().length() == 0 ||
+                    textFieldDateOfIssue.getText().length() == 0 ||
+                    textFieldReturnDate.getText().length() == 0 ||
+                    textFieldDetail.getText().length() == 0) {
+                report.message();
+            } else {
+                testDate(data,
+                        textFieldRecipint,
+                        comboStation,
+                        textFieldNomination,
+                        textFieldSize,
+                        textFieldIndex,
+                        textFieldDateOfIssue,
+                        textFieldReturnDate,
+                        textFieldDetail,
+                        newStrStStage);
+            }
         });
+    }
 
+    protected void testDate(ObservableList<UserStorage> data,
+                            TextField textFieldRecipint,
+                            ComboBox comboStation,
+                            TextField textFieldNomination,
+                            TextField textFieldSize,
+                            TextField textFieldIndex,
+                            TextField textFieldDateOfIssue,
+                            TextField textFieldReturnDate,
+                            TextField textFieldDetail,
+                            Stage newStrStStage){
+        try {
+            testDate = formatter.parse(textFieldDateOfIssue.getText());
+            testDate1 = formatter.parse(textFieldReturnDate.getText());
 
+            if (!formatter.format(testDate).equals(textFieldDateOfIssue.getText()) ||
+                !formatter.format(testDate1).equals(textFieldReturnDate.getText())){
 
+                report.messageDate();
 
+            }else {
+                textRecipientCol = textFieldRecipint.getText();
+                textStationCol = comboStation.getValue().toString();
+                textNominationCol = textFieldNomination.getText();
+                textSizeCol = textFieldSize.getText();
+                textIndexCol = textFieldIndex.getText();
+                textDateOfIssueCol = textFieldDateOfIssue.getText();
+                textReturnDateCol = textFieldReturnDate.getText();
+                textDetailCol = textFieldDetail.getText();
+                data.removeAll(data);
+                db.writeBd(textRecipientCol, textStationCol, textNominationCol, textSizeCol, textIndexCol, textDateOfIssueCol, textReturnDateCol, textDetailCol);
+                db.readBd(data);
+                newStrStStage.close();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            report.messageDate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
+

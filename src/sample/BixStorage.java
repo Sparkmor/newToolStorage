@@ -72,47 +72,56 @@ public class BixStorage extends Application {
 
         TableColumn recipientCol = new TableColumn("получатель");
         recipientCol.setMinWidth(200);
+        recipientCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 500;");
         recipientCol.setCellValueFactory(
                 new PropertyValueFactory<>("recipient"));//
 
 
         TableColumn stationCol = new TableColumn("участок");
         stationCol.setMinWidth(30);
+        stationCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
         stationCol.setCellValueFactory(
                 new PropertyValueFactory<UserStorage, String>("station"));
 
         TableColumn nominationCol = new TableColumn("наименование");
         nominationCol.setMinWidth(100);
+        nominationCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
         nominationCol.setCellValueFactory(
                 new PropertyValueFactory<UserStorage, String>("nomination"));
 
         TableColumn sizeCol = new TableColumn("размер");
         sizeCol.setMinWidth(40);
+        sizeCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
         sizeCol.setCellValueFactory(
                 new PropertyValueFactory<UserStorage, String>("size"));
 
         TableColumn indexCol = new TableColumn("№ номер");
         indexCol.setMinWidth(40);
+        indexCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
         indexCol.setCellValueFactory(new PropertyValueFactory<UserStorage, String>("index"));
 
         TableColumn dateOfIssueCol = new TableColumn("Д/выдачи");
         dateOfIssueCol.setMinWidth(60);
+        dateOfIssueCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
         dateOfIssueCol.setCellValueFactory(
                 new PropertyValueFactory<UserStorage, String>("dateOfIssue"));
 
         TableColumn returnDateCol = new TableColumn("Д/возврата");
         returnDateCol.setMinWidth(60);
+        returnDateCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
         returnDateCol.setCellValueFactory(
                 new PropertyValueFactory<UserStorage, String>("returnDate"));
 
         TableColumn detailCol = new TableColumn("деталь");
         detailCol.setMinWidth(70);
+        detailCol.setStyle("-fx-font-family: Bradley Hand; -fx-font-size: 16; -fx-font-weight: 600;");
         detailCol.setCellValueFactory(
                 new PropertyValueFactory<UserStorage, String>("detail"));
 
 
         TableColumn idCol = new TableColumn("№ строки");
         idCol.setMinWidth(40);
+        idCol.setStyle("-fx-font-family: Comic Sans; -fx-font-size: 16; -fx-font-weight: 600;");
         idCol.setCellValueFactory(
                 new PropertyValueFactory<UserStorage, String>("id"));
 
